@@ -57,7 +57,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ΣΤΕΦ <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li class="departmentChoice" data-department="inf"><a href="#"><a href="#">Πληροφορική</a></li>
+								<li class="departmentChoice" data-department="inf"><a href="#">Πληροφορική</a></li>
 								<li class="departmentChoice" data-department="eln"><a href="#">Ηλεκτρονική</a></li>
 								<li class="departmentChoice" data-department="ele"><a href="#">Ηλεκτρολογία</a></li>
 								<li role="separator" class="divider"></li>
@@ -82,8 +82,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 id="tableH1"><center><center></h1>
-					<table id="mainTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<h1 id="tableTitle" class="text-center">Loading</h1>
+					<table id="mainTable" class="table table-striped table-bordered">
 						<thead>
 							<tr>
 								<th>Α/Α</th>
@@ -100,84 +100,84 @@
 				</div>
 			</div>
 		</div>
-	</body>
 	
-	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>
-	<script>
-			var options = {
-				stef:{
-					file: "stef.json",
-					title: "ΣΤΕΦ"
-				},
-				inf:{
-					file: "inf.json",
-					title: "Τμήμα Πληροφορικής"
-				},
-				eln:{
-					file: "eln.json",
-					title: "Τμήμα Ηλεκτρονικής"
-				},
-				ele:{
-					file: "ele.json",
-					title: "Τμήμα Ηλεκτρολογίας"
-				},
-				seyp:{
-					file: "seyp.json",
-					title: "ΣΕΥΠ"
-				},
-				nos:{
-					file: "nos.json",
-					title: "Τμήμα Νοσηλευτικής"
-				},
-				fys:{
-					file: "fys.json",
-					title: "Τμήμα Φυσικοθεραπείας"
-				},
-			}
-			
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.9/js/dataTables.bootstrap.min.js"></script>
+		<script>
+				var options = {
+					stef:{
+						file: "stef.json",
+						title: "ΣΤΕΦ"
+					},
+					inf:{
+						file: "inf.json",
+						title: "Τμήμα Πληροφορικής"
+					},
+					eln:{
+						file: "eln.json",
+						title: "Τμήμα Ηλεκτρονικής"
+					},
+					ele:{
+						file: "ele.json",
+						title: "Τμήμα Ηλεκτρολογίας"
+					},
+					seyp:{
+						file: "seyp.json",
+						title: "ΣΕΥΠ"
+					},
+					nos:{
+						file: "nos.json",
+						title: "Τμήμα Νοσηλευτικής"
+					},
+					fys:{
+						file: "fys.json",
+						title: "Τμήμα Φυσικοθεραπείας"
+					},
+				}
+				
 
-			var table = $('#mainTable').DataTable();
-			
-			$(document).ready(function() {
+				var table = $('#mainTable').DataTable();
+				
+				$(document).ready(function() {
 
-				$.ajaxSetup({
-					scriptCharset: "utf-8",
-					contentType: "application/json",
-					charset: "utf-8"
-				});
-
-				load("inf");
-
-				$(".departmentChoice").click(function(){
-					load($(this).data("department"));
-				});
-			});
-
-			function load(department){
-				table.destroy();
-				$("#tableH1 center").text(options[department].title);
-
-				var tbody = $("#mainTable tbody");
-				tbody.html("<tr><td colspan=\"6\"><center>Loading</center></td></tr>");
-
-				$.getJSON( "./data/"+options[department].file, function( data ) {
-					tbody.html('');
-					$.each( data, function( key, item ) {
-						$("<tr/>").append(
-							"<td>" + key + "</td>\
-							<td>" + item.title + "</td>\
-							<td>"+ item.student + "</td>\
-							<td>"+ item.prof + "</td>\
-							<td>"+ item.year + "</td>\
-							<td>" + item.comments + "</td>"
-						).appendTo(tbody);
+					$.ajaxSetup({
+						scriptCharset: "utf-8",
+						contentType: "application/json",
+						charset: "utf-8"
 					});
-					table = $('#mainTable').DataTable();
+
+					load("inf");
+
+					$(".departmentChoice").click(function(){
+						load($(this).data("department"));
+					});
 				});
-			}
-	</script>
+
+				function load(department){
+					table.destroy();
+					$("#tableTitle").text(options[department].title);
+
+					var tbody = $("#mainTable tbody");
+					tbody.html("<tr class=\"text-center\"><td colspan=\"6\">Loading</td></tr>");
+
+					$.getJSON( "./data/"+options[department].file, function( data ) {
+						tbody.html('');
+						$.each( data, function( key, item ) {
+							$("<tr/>").append(
+								"<td>" + key + "</td>\
+								<td>" + item.title + "</td>\
+								<td>"+ item.student + "</td>\
+								<td>"+ item.prof + "</td>\
+								<td>"+ item.year + "</td>\
+								<td>" + item.comments + "</td>"
+							).appendTo(tbody);
+						});
+						table = $('#mainTable').DataTable();
+					});
+				}
+		</script>
+	</body>
 </html>
 <!-- xls to json conversion by https://shancarter.github.io/mr-data-converter/ -->
