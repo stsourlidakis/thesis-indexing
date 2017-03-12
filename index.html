@@ -173,7 +173,10 @@
 								<td>" + item.comments + "</td>"
 							).appendTo(tbody);
 						});
-						table = $('#mainTable').DataTable({responsive: true});
+						table = $('#mainTable').DataTable({
+							responsive: true,
+							order: [[ 4, "desc" ]]
+						});
 					});
 				}
 		</script>
